@@ -1,0 +1,33 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "colors.scss";
+@import "animation.scss";
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: $secondary; }
+
+
+.primary-color {
+  color: $primary;
+}
+.secondary-color {
+  color: $secondary;
+}
+.light-color {
+  color: $light;
+}
+.info-color {
+  color: $info;
+}
+.blue-color {
+  color: $blue;
+}
+.primary-bg {
+  background-color: $primary;
+}
+.secondary-bg {
+  background-color: $secondary;
+}
+
+
+

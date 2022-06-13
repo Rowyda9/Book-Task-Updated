@@ -1,0 +1,84 @@
+
+<section class="book-container animated fadeIn">
+  <mat-card class="book-card" >
+    <mat-card-title>
+      <h1 class="title">{{ isEdit? 'Update' : 'Create' }} Book</h1>
+    </mat-card-title>
+
+<form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
+    <mat-card-content >
+
+        <mat-form-field>
+          <input matInput placeholder="Title" name="title" formControlName="title">
+          <mat-error *ngIf="validateControlName('title') ">
+            {{validateControlName('title')}}
+          </mat-error>
+        </mat-form-field>
+
+      <mat-form-field class="p-color" color="primary">
+        <input class="p-color" color="primary" matInput placeholder="Author's name" name="authorName"
+         formControlName="authorName">
+        <mat-error *ngIf="validateControlName('authorName')">
+          {{validateControlName('authorName')}}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="p-color" color="primary">
+        <input class="p-color" color="primary" matInput placeholder="Publish Year (YYYY)"
+        name="publishYear" type="number" [max]="currentYear" [min]="1700" formControlName="publishYear">
+        <mat-error *ngIf="validateControlName('publishYear')">
+          {{validateControlName('publishYear')}}
+        </mat-error>
+        <mat-error *ngIf="bookForm.get('publishYear')?.errors?.['max'] ">
+          Publish Year can not be greater than {{currentYear}}
+        </mat-error>
+
+        <mat-error *ngIf="bookForm.get('publishYear')?.errors?.['min'] ">
+          Publish Year can not be less than 1700
+        </mat-error>
+      </mat-form-field>
+
+      <!-- <mat-form-field class="p-color" color="primary" appearance="fill">
+        <input matInput placeholder="Publish Year (YYYY) "
+         [max]="currentYear" maxlength="4" name="publishYear" formControlName="publishYear">
+        <mat-error *ngIf="validateControlName('publishYear') ">
+          {{validateControlName('publishYear')}}
+        </mat-error>
+
+        <mat-error *ngIf="bookForm.get('publishYear')?.errors?.['max'] ">
+          Publish Year can not be greater than {{currentYear}}
+        </mat-error>
+
+        <!-- <input pattern="0-9" matInput color="primary" class="p-color"
+        [matDatepicker]="dp" [formControl]="date"
+         [max]="currentYear">
+        <mat-datepicker-toggle  class="p-color" matSuffix [for]="dp"></mat-datepicker-toggle>
+        <mat-datepicker #dp  class="p-color"
+                        startView="multi-year"
+                        (yearSelected)="setYear($event, dp)"
+                        panelClass="book-year-picker">
+        </mat-datepicker> --
+
+      </mat-form-field> -->
+      <mat-form-field>
+        <input matInput placeholder="Poster Link" name="poster" formControlName="poster">
+        <mat-error >
+          {{validateControlName('poster')}}
+        </mat-error>
+      </mat-form-field>
+    </mat-card-content>
+
+
+    <mat-card-actions>
+      <div class="action-buttons">
+        <button type="submit" mat-button  class="primary-btn"
+        aria-label="Save new book">Save</button>
+
+        <a type="button" [routerLink]="[routes.BookList]" mat-button  class="secondary-btn"
+        aria-label="Books List">Back</a>
+      </div>
+    </mat-card-actions>
+  </form>
+  </mat-card>
+
+</section>

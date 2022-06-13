@@ -1,0 +1,143 @@
+
+@import "colors.scss";
+@import "animation.scss";
+
+
+.book-container{
+  margin: auto;
+  border-radius: 4px;
+  text-align: center;
+  margin-top: 2%;
+  width: 100%;
+  max-width: 800px;
+  .title{
+    color: $primary;
+    font-weight: 900;
+  }
+  .btn {
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+    margin: 10px;
+    cursor: pointer;
+  }
+  .info-btn{
+    background: $info;
+    color: $white;
+  }
+  .danger-btn{
+    background: $danger;
+    color: $white;
+  }
+  .primary-btn{
+    background: $primary;
+    color: $white;
+  }
+  .drag-indicator {
+    display: flex;
+    align-items: center;
+    span.material-icons {
+      color: #b0bec5;
+    }
+  }
+  .blue-btn{
+    background: $blue;
+    color: $white;
+  }
+  .book-card {
+    max-width: 400px;
+    margin: auto;
+    width: 500px;
+    max-width: 100%;
+    border: solid 1px #ccc;
+    min-height: 60px;
+    display: block;
+    box-shadow: 0 .5rem 1rem #00000026!important;
+    overflow: hidden;
+    background: $light;
+    color: $primary;
+   p{ font-size: 20px;}
+   .mat-divider {
+    border-top-color: $primary;
+  }
+  }
+
+
+}
+
+
+.book-list {
+  margin: auto;
+  border: solid 1px #ccc;
+  min-height: 60px;
+  display: block;
+  box-shadow: 0 .5rem 1rem #00000026!important;
+  overflow: hidden;
+
+  .book-box {
+    padding: 20px 10px;
+    border-bottom: solid 1px #ccc;
+    color: $info;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    cursor: move !important;
+    background: $light;
+    font-size: 14px;
+  }
+}
+
+
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+              0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.example-box:last-child {
+  border: none;
+}
+
+.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+table {
+  width: 100%;
+}
+.spacer {
+  flex: 1 1 auto;
+}
+.p-1 {
+  padding: 1rem;
+}
+
+.m-0 {
+  margin: 0;
+}
+
+
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  button, a {
+    flex: 1 1 auto;
+  }
+}
+
+.text-warning {
+  color: $warning;
+}

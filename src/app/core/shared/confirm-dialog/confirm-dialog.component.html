@@ -1,0 +1,11 @@
+
+
+<h1 mat-dialog-title class="light-color">Delete Book</h1>
+<div mat-dialog-content >
+  Would you like to delete <b class="info-color"> {{bookTitle}} </b>?
+</div>
+<div mat-dialog-actions>
+  <button  color="info" mat-stroked-button mat-dialog-close>No</button>
+  <button color="warn"   mat-stroked-button [mat-dialog-close]="true" cdkFocusInitial>Yes</button>
+</div>
+

@@ -1,0 +1,76 @@
+
+<section class="book-container animated fadeIn">
+ <h1 class="title" >My Favorite Books </h1>
+
+  <ng-container *ngIf="books.length > 0" >
+    <div class="action-buttons">
+      <a mat-raised-button [routerLink]="[routes.ManageBook]" class="btn info-btn" aria-label="Add new book">Add Book</a>
+      <button mat-raised-button (click)="clearList()" class="btn danger-btn" aria-label="Clear List">Clear List</button>
+      <button mat-raised-button (click)="seedBookData()" class="btn blue-btn" aria-label="Add List">Add Default List</button>
+    </div>
+
+
+  <div cdkDropList class="book-list" (cdkDropListDropped)="drop($event)" >
+    <div [@listAnimation]="books.length">
+      <div class="book-box" *ngFor="let book of books; trackBy: trackBy" cdkDrag>
+        <div class="drag-indicator">
+          <span class="material-icons">
+            drag_indicator
+            </span>
+          <span>
+            {{book.order}}
+          </span>
+        </div>
+
+        <div class="p-1"></div>
+        <ng-container *ngIf="book.poster">
+          <img [src]="book.poster" width="50"  [alt]="book.title">
+        </ng-container>
+        <ng-container *ngIf="!book.poster">
+          <span class="material-icons" style="font-size: 50px;">
+            book
+          </span>
+        </ng-container>
+
+
+        <div class="p-1"></div>
+         <h2 class="m-0"> {{book.title}}</h2>
+        <div class="spacer"></div>
+
+        <span>By <span class="blue-color">{{book.authorName}} </span> - {{book.publishYear}} </span>
+
+        <div class="p-1"></div>
+        <img *cdkDragPreview [src]="book.poster" [alt]="book.title" style="max-width: 600px;">
+        <div>
+          <a class="text-warning" [routerLink]="[routes.ManageBook, {id: book.id}]" mat-icon-button aria-label="Edit book">
+            <mat-icon>edit</mat-icon>
+          </a>
+          <a (click)="deleteBook(book)" color="warn" mat-icon-button aria-label="Delete book">
+            <mat-icon>delete</mat-icon>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</ng-container>
+
+  <mat-card class="book-card animated fadeIn" *ngIf="books?.length === 0">
+    <mat-card-content>
+      <img [src]="imgUrl" alt="No books found">
+      <p>
+        Your favorites list is empty. Add some books to your list.
+      </p>
+    </mat-card-content>
+    <mat-divider inset></mat-divider>
+    <mat-card-actions>
+      <a mat-button [routerLink]="[routes.ManageBook]" class="btn info-btn"
+       aria-label="Add new book">Add Book</a>
+
+       <a mat-button (click)="seedBookData()" class="btn primary-btn" aria-label="Add List">Add Default List</a>
+    </mat-card-actions>
+  </mat-card>
+
+</section>
+
+
