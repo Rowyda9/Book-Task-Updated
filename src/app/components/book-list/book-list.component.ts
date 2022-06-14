@@ -3,12 +3,10 @@ import { Book } from '@models/book/book.model';
 import { FacadeService } from '@services/facade.service';
 import { AppRoutes } from '@constants/routes';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { MatDialog } from '@angular/material/dialog';
-import { firstValueFrom } from 'rxjs';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import {trigger, transition, style, animate, query, stagger} from '@angular/animations';
-import { ConfirmDialogComponent } from 'src/app/core/shared/confirm-dialog/confirm-dialog.component';
 import { Assets } from '@constants/assets';
+import { ActivatedRoute } from '@angular/router';
+import { LocalStorage } from '@constants/local-storage';
 
 @Component({
   selector: 'app-book-list',
@@ -30,12 +28,14 @@ import { Assets } from '@constants/assets';
 
 export class BookListComponent implements OnInit {
   books:Book[] = [];
+  listName:string =LocalStorage.DefaultList;
   get routes(): typeof AppRoutes {
     return AppRoutes;
   }
   imgUrl:string = Assets.Empty;
-  constructor(private facadeService: FacadeService,
-    public dialog: MatDialog,private _snackBar: MatSnackBar) { }
+  constructor(private facadeService: FacadeService,private activatedRoute: ActivatedRoute) {
+      this.listName = this.activatedRoute.snapshot.paramMap.get('name') ??  LocalStorage.DefaultList;
+    }
 
   ngOnInit(): void {
       this.getBooks();
@@ -51,7 +51,7 @@ export class BookListComponent implements OnInit {
    *
    */
     getBooks() {
-      this.books = this.facadeService.bookService.list();
+      this.books = this.facadeService.bookService.list(this.listName);
     }
 
   /**
@@ -59,11 +59,9 @@ export class BookListComponent implements OnInit {
    *
    */
     seedBookData() {
-       this.facadeService.bookService.addList();
+       this.facadeService.bookListService.addDefaultList();
        this.getBooks();
-       this._snackBar.open("Book list has been updated successfully", "OK",{
-        duration: 2000
-       });
+       this.facadeService.snackbarService.success("Book list has been updated successfully");
     }
 
 
@@ -73,11 +71,11 @@ export class BookListComponent implements OnInit {
    * @param book
    */
     async deleteBook(book: Book): Promise<void> {
-    if (await this.openDialog(book?.title)) {
-    const isDeleted = this.facadeService.bookService.delete(book.id);
+    if (await this.facadeService.dialogService.openDialog(book?.title)) {
+    const isDeleted = this.facadeService.bookService.delete(this.listName,book.id);
     if (isDeleted) {
-      this.books = this.facadeService.bookService.list();
-      this._snackBar.open("Book has been deleted successfully", "OK");
+      this.books = this.facadeService.bookService.list(this.listName,);
+      this.facadeService.snackbarService.secondary("Book has been deleted successfully");
     }
   }
   }
@@ -87,27 +85,15 @@ export class BookListComponent implements OnInit {
    *
    */
   async clearList(): Promise<void> {
-    if (await this.openDialog("Book List")) {
-    const isDeleted = this.facadeService.bookService.deleteAll();
+    if (await this.facadeService.dialogService.openDialog(this.listName+" List")) {
+    const isDeleted = this.facadeService.bookListService.deleteList(this.listName,);
     if (isDeleted) {
       this.books = [];
-      this._snackBar.open("Books List has been deleted successfully", "OK");
+      this.facadeService.snackbarService.secondary("Books List has been deleted successfully");
     }
   }
   }
 
-  /**
-   * open confirm dialog
-   *
-   * @param bookTitle
-   */
-  async openDialog(bookTitle: string): Promise<boolean> {
-    return await firstValueFrom(this.dialog.open(ConfirmDialogComponent, {
-        width: '350px',
-        data: bookTitle,
-      }).afterClosed());
-
-    }
 
 
   /**
@@ -126,7 +112,7 @@ export class BookListComponent implements OnInit {
    * @param order
    */
   changeOrder(bookToChangeOrder: Book, bookOfCurrentOrder: Book) {
-    this.books = this.facadeService.bookService.changeOrder(bookToChangeOrder, bookOfCurrentOrder);
+    this.books = this.facadeService.bookService.changeOrder(this.listName,bookToChangeOrder, bookOfCurrentOrder);
   }
 
 }

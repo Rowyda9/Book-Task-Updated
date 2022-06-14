@@ -12,21 +12,17 @@ import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { BookService } from '@services/book/book.service';
 import { ConfirmDialogModule } from '@shared/confirm-dialog/confirm-dialog.module';
-import { BookListComponent } from './book-list.component';
-import {defaultBooks} from './../../core/constants/book-list';
-import { of } from 'rxjs';
-describe('BookListComponent', () => {
-  let component: BookListComponent;
-  let fixture: ComponentFixture<BookListComponent>;
-  let mockService:any;
-  let list = defaultBooks;
+
+import { MyListComponent } from './my-list.component';
+
+describe('MyListComponent', () => {
+  let component: MyListComponent;
+  let fixture: ComponentFixture<MyListComponent>;
 
   beforeEach(async () => {
-   mockService = jasmine.createSpyObj(BookService,['listAll']);
     await TestBed.configureTestingModule({
-      declarations: [ BookListComponent ],
+      declarations: [ MyListComponent ],
       imports: [
 
         RouterTestingModule,
@@ -50,7 +46,7 @@ describe('BookListComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BookListComponent);
+    fixture = TestBed.createComponent(MyListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -58,11 +54,4 @@ describe('BookListComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  // it('get books correctly from the service', () => {
-  //   expect(component.getBooks).toBeTruthy();
-  //   mockService.listAll.and.returnValue(of(list));
-  //      fixture.detectChanges();
-  //      expect(component.getBooks).toBe(4);
-  // });
 });

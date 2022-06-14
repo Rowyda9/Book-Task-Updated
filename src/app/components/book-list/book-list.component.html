@@ -1,12 +1,12 @@
 
 <section class="book-container animated fadeIn">
- <h1 class="title" >My Favorite Books </h1>
+ <h1 class="title" >{{listName}} </h1>
 
   <ng-container *ngIf="books.length > 0" >
     <div class="action-buttons">
-      <a mat-raised-button [routerLink]="[routes.ManageBook]" class="btn info-btn" aria-label="Add new book">Add Book</a>
+      <a mat-raised-button [routerLink]="[routes.ManageBook+'/'+listName]" class="btn info-btn" aria-label="Add new book">Add Book</a>
       <button mat-raised-button (click)="clearList()" class="btn danger-btn" aria-label="Clear List">Clear List</button>
-      <button mat-raised-button (click)="seedBookData()" class="btn blue-btn" aria-label="Add List">Add Default List</button>
+      <button mat-raised-button [routerLink]="[routes.MyBookList]" class="btn blue-btn" aria-label="My List">Back to My List</button>
     </div>
 
 
@@ -64,10 +64,10 @@
     </mat-card-content>
     <mat-divider inset></mat-divider>
     <mat-card-actions>
-      <a mat-button [routerLink]="[routes.ManageBook]" class="btn info-btn"
+      <a mat-button [routerLink]="[routes.ManageBook+'/'+listName]" class="btn info-btn"
        aria-label="Add new book">Add Book</a>
 
-       <a mat-button (click)="seedBookData()" class="btn primary-btn" aria-label="Add List">Add Default List</a>
+       <a mat-button (click)="seedBookData()" class="btn primary-btn" aria-label="Add List">Add Default Books</a>
     </mat-card-actions>
   </mat-card>
 

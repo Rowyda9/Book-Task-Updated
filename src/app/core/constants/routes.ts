@@ -1,6 +1,5 @@
 export enum AppRoutes {
+  MyBookList ='/my-list',
   BookList = '/book-list',
   ManageBook = '/manage-book',
-  About = '/about-us',
-  ContactUs = '/contact-us',
 }

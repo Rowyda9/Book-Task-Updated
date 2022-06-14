@@ -12,6 +12,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ManageBookComponent } from './manage-book.component';
 import { Book } from '../../core/models/book/book.model';
+import { AppRoutes } from '@constants/routes';
+import { BookListComponent } from '@components/book-list/book-list.component';
 
 describe('ManageBookComponent', () => {
   let component: ManageBookComponent;
@@ -20,7 +22,10 @@ describe('ManageBookComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
+      //  RouterTestingModule,
+        RouterTestingModule.withRoutes(
+          [{path: 'book-list', component: BookListComponent}]
+        ),
         MatButtonModule,
         MatInputModule,
         BrowserAnimationsModule,
@@ -79,6 +84,7 @@ describe('ManageBookComponent', () => {
     expect(component.bookForm.valid).toBeFalsy();
     component.bookForm.controls['title'].setValue("Test Book");
     component.bookForm.controls['authorName'].setValue("Author Test");
+    component.bookForm.controls['publishYear'].setValue(2000);
     expect(component.bookForm.valid).toBeTruthy();
 
      var book!: Book;

@@ -1,0 +1,49 @@
+<section class="book-container animated fadeIn">
+  <h1 class="title" >My List </h1>
+
+  <div class="action-buttons">
+    <a mat-raised-button (click)="addNewList()"  class="btn info-btn" aria-label="Add new list">Add List</a>
+    <button mat-raised-button (click)="clearAll()" class="btn danger-btn" aria-label="Clear List">Clear All</button>
+    <button mat-raised-button [routerLink]="[routes.BookList+'/'+listName ]" class="btn blue-btn" aria-label="My Default List">Back to My Default List</button>
+  </div>
+
+<mat-grid-list [cols]="breakpoint" *ngIf="listNames?.length !== 0"
+ rowHeight="400" gutterSize="5" (window:resize)="onResize($event)">
+  <mat-grid-tile *ngFor="let name of listNames ">
+    <mat-card class="book-card animated fadeIn pb-4"
+    [routerLink]="[routes.BookList, {name: name}]" >
+      <mat-card-content>
+        <img [src]="imgUrl" alt="No books found">
+        <h2>
+          {{name}}
+        </h2>
+      </mat-card-content>
+      <mat-divider class="my-3" inset></mat-divider>
+      <mat-card-actions>
+        <a mat-button [routerLink]="[routes.ManageBook+'/'+name]" (click)="$event.stopPropagation();" class="btn info-btn"
+         aria-label="Add new book">Add Book</a>
+
+         <a mat-button (click)="$event.stopPropagation(); deleteList(name)"
+           class="btn danger-btn"
+          aria-label="Delete List">Delete List</a>
+      </mat-card-actions>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
+
+<mat-card class="book-card animated fadeIn" *ngIf="listNames?.length === 0">
+  <mat-card-content>
+    <img [src]="imgUrl" alt="No books found">
+    <p>
+      Your favorites list is empty. Add some books to your list.
+    </p>
+  </mat-card-content>
+  <mat-divider inset></mat-divider>
+  <mat-card-actions>
+    <a mat-button (click)="addNewList()" class="btn info-btn"
+     aria-label="Add new list">Add List</a>
+
+     <a mat-button (click)="seedBookData();" class="btn primary-btn" aria-label="Add List">Add Default List</a>
+  </mat-card-actions>
+</mat-card>
+</section>

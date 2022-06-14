@@ -2,7 +2,7 @@
 <section class="book-container animated fadeIn">
   <mat-card class="book-card" >
     <mat-card-title>
-      <h1 class="title">{{ isEdit? 'Update' : 'Create' }} Book</h1>
+      <h1 class="title">{{ isEdit? 'Update' : 'Add' }} Book To {{listName}}</h1>
     </mat-card-title>
 
 <form [formGroup]="bookForm" (ngSubmit)="onSubmit()">

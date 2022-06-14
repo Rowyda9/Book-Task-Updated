@@ -1,0 +1,76 @@
+@import "colors.scss";
+@import "animation.scss";
+.w-20{
+  max-width: 30%;
+}
+
+.book-container{
+  margin: auto;
+  border-radius: 4px;
+  text-align: center;
+  margin-top: 2%;
+  width: 100%;
+  max-width: 800px;
+  .title{
+    color: $primary;
+    font-weight: 900;
+  }
+  .btn {
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+    margin: 10px;
+    cursor: pointer;
+  }
+  .info-btn{
+    background: $info;
+    color: $white;
+  }
+  .danger-btn{
+    background: $danger;
+    color: $white;
+  }
+  .primary-btn{
+    background: $primary;
+    color: $white;
+  }
+  .drag-indicator {
+    display: flex;
+    align-items: center;
+    span.material-icons {
+      color: #b0bec5;
+    }
+  }
+  .blue-btn{
+    background: $blue;
+    color: $white;
+  }
+  .book-card {
+    max-width: 400px;
+    margin: auto;
+    width: 500px;
+    max-width: 100%;
+    border: solid 1px #ccc;
+    min-height: 60px;
+    display: block;
+    box-shadow: 0 .5rem 1rem #00000026!important;
+    overflow: hidden;
+    background: $light;
+    color: $primary;
+    cursor: pointer;
+   p{ font-size: 20px;}
+   .mat-divider {
+    border-top-color: $primary;
+  }
+  }
+
+
+}
+
+.my-3 {
+  margin: 20px 0px !important;
+}
+
+.pb-4 {
+  padding-bottom: 40px;
+}

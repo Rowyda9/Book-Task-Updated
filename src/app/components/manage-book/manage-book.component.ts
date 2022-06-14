@@ -5,22 +5,7 @@ import { Book } from '@models/book/book.model';
 import { FacadeService } from '@services/facade.service';
 import { AppRoutes } from '@constants/routes';
 import { MatSnackBar } from '@angular/material/snack-bar';
-//import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
-import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
-import {MatDatepicker} from '@angular/material/datepicker';
-import * as _moment from 'moment';
-const moment = _moment;
-export const MY_FORMATS = {
-  parse: {
-    dateInput: 'YYYY',
-  },
-  display: {
-    dateInput: 'YYYY',
-    yearLabel: 'YYYY',
-    dateA11yLabel: 'LL',
-    yearA11yLabel: 'YYYY',
-  },
-};
+import { LocalStorage } from '@constants/local-storage';
 
 @Component({
   selector: 'app-manage-book',
@@ -30,7 +15,7 @@ export const MY_FORMATS = {
 
 export class ManageBookComponent implements OnInit {
   @Output() testBook: EventEmitter<Book> = new EventEmitter<Book>();
-
+  listName:string =LocalStorage.DefaultList;
   bookId = 0;
   book = new Book();
   get isEdit(): boolean {
@@ -40,7 +25,6 @@ export class ManageBookComponent implements OnInit {
     return AppRoutes;
   }
   currentYear : number=new Date().getFullYear();
-  //date = new FormControl(moment(),[Validators.required, Validators.maxLength(4)]);
   bookForm = new FormGroup({
     title: new FormControl('',[Validators.required, Validators.minLength(4)]),
     authorName: new FormControl('',Validators.required),
@@ -50,17 +34,15 @@ export class ManageBookComponent implements OnInit {
 
   constructor(
     private facadeService: FacadeService,private activatedRoute: ActivatedRoute,
-    private router: Router,private _snackBar: MatSnackBar ) {
+    private router: Router ) {
     this.bookId = +(this.activatedRoute.snapshot.paramMap.get('id') ?? 0);
-
+    this.listName = this.activatedRoute.snapshot.paramMap.get('name') ??  LocalStorage.DefaultList;
    }
 
   ngOnInit(): void {
     console.clear();
     if (this.isEdit)
        this.getBook();
-
-       console.log(this.currentYear);
   }
 
   /**
@@ -68,7 +50,7 @@ export class ManageBookComponent implements OnInit {
    *
    */
   getBook() {
-    this.book = this.facadeService.bookService.get(this.bookId);
+    this.book = this.facadeService.bookService.get(this.listName,this.bookId);
     this.bookForm.patchValue(this.book);
   }
 
@@ -91,18 +73,6 @@ export class ManageBookComponent implements OnInit {
     return null;
   }
 
-   /**
-   * set year from datePicker
-   *
-   * @param normalizedYear
-   * @param datepicker
-   */
-  // setYear(normalizedYear: _moment.Moment, datepicker: MatDatepicker<_moment.Moment>) {
-  //   const ctrlValue = this.date.value!;
-  //   ctrlValue.year(normalizedYear.year());
-  //   this.date.setValue(ctrlValue);
-  //   datepicker.close();
-  // }
 
 /**
  * Save book
@@ -111,8 +81,6 @@ export class ManageBookComponent implements OnInit {
   onSubmit() {
     if (this.bookForm.invalid) return;
     this.book = this.bookForm.value;
-   // this.book.publishYear = this.date.value.year();
-
     this.testBook.emit(
       new Book(1,
           this.bookForm.value.title,
@@ -123,14 +91,12 @@ export class ManageBookComponent implements OnInit {
 
     if (this.isEdit) {
       this.book.id = this.bookId;
-      this.facadeService.bookService.update(this.book);
+      this.facadeService.bookService.update(this.listName,this.book);
     } else {
-      this.facadeService.bookService.create(this.book);
+      this.facadeService.bookService.create(this.listName,this.book);
     }
-    this._snackBar.open("Book has been saved successfully", "OK",{
-      duration: 3000
-    });
-    this.router.navigateByUrl(AppRoutes.BookList);
+    this.facadeService.snackbarService.success("Book has been saved successfully");
+    this.router.navigateByUrl(AppRoutes.BookList+"/"+this.listName);
   }
 
 
