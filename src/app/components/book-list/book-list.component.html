@@ -42,7 +42,7 @@
         <div class="p-1"></div>
         <img *cdkDragPreview [src]="book.poster" [alt]="book.title" style="max-width: 600px;">
         <div>
-          <a class="text-warning" [routerLink]="[routes.ManageBook, {id: book.id}]" mat-icon-button aria-label="Edit book">
+          <a class="text-warning" [routerLink]="[routes.ManageBook+'/'+listName+'/'+ book.id]" mat-icon-button aria-label="Edit book">
             <mat-icon>edit</mat-icon>
           </a>
           <a (click)="deleteBook(book)" color="warn" mat-icon-button aria-label="Delete book">
